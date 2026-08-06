@@ -1,0 +1,11 @@
+.copy-btn {
+  display: flex;
+  align-items: center;
+  background-color: rgb(255, 255, 255, 20%);
+  color: var(--white);
+  font-size: 14px !important;
+  padding: 5px 10px !important;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}

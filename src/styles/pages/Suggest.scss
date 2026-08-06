@@ -1,0 +1,21 @@
+.suggest {
+  .suggestion-box:focus {
+    outline: 2px solid var(--rot-3) !important;
+    outline-offset: 1px;
+  }
+  .submit-btn {
+    float: left;
+    background-color: var(--rot-3);
+    color: var(--white);
+  }
+  .submit-btn:disabled {
+    background: var(--line);
+    color: var(--ink-soft);
+  }
+  span {
+    font-weight: 600;
+  }
+  .btn-green {
+    background-color: var(--rot-3);
+  }
+}

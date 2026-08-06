@@ -1,0 +1,53 @@
+
+/* --- Admin queue --- */
+
+.queue-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.queue-row-text {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  color: var(--ink);
+}
+
+.queue-emoji {
+  font-size: 1.2rem;
+}
+
+.queue-submitted-by {
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  margin-top: 0.15rem;
+}
+
+.submitted-by-input {
+  margin-top: 0.75rem;
+}
+
+.queue-row-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.queue-row-actions input[type="date"] {
+  background: var(--white);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  border-radius: 8px;
+  padding: 0.45rem 0.5rem;
+  font-family: var(--font-body);
+}
+
+.queue-date-badge {
+  font-family: var(--font-display);
+  color: var(--red);
+  font-size: 0.9rem;
+}

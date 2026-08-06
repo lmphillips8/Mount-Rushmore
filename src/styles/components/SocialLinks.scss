@@ -1,0 +1,22 @@
+.social-links {
+  margin-top: 100px;
+
+  .social-bubbles {
+    text-align: center;
+    height: 40px;
+    .icon-wrapper {
+      background-color: rgba(255, 255, 255, 0.4);
+      display: inline-block;
+      border-radius: 100%;
+      border: thin solid var(--rot1);
+      padding: 20px 20px;
+      margin-left: 20px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+  h4 {
+    font-family: "Montserrat", sans-serif;
+  }
+}

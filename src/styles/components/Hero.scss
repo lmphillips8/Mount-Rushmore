@@ -1,0 +1,53 @@
+.hero {
+  position: relative;
+  border-radius: 0 0 20px 20px;
+  //   padding: 2.25rem 2rem;
+  text-align: center;
+  overflow: hidden;
+  color: var(--white);
+  margin: 0 0 1.75rem;
+}
+
+.hero-orange {
+  color: var(--rot-1);
+}
+
+.hero-blue {
+  color: var(--rot-2);
+}
+
+.hero-green {
+  color: var(--rot-3);
+}
+
+.hero-gold {
+  color: var(--rot-4);
+}
+
+.hero-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  font-weight: 600;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 5vw, 2.1rem);
+  line-height: 1.2;
+  margin: 0.5rem 0 0;
+}
+
+.hero-subtitle {
+  font-size: 0.95rem;
+  opacity: 0.9;
+  margin: 0.6rem 0 0;
+}
+
+.hero-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+}
