@@ -1,5 +1,6 @@
 # Dependencies
-frontend/node_modules/
+node_modules/
+package-lock.json
 
 # Environment variables
 .env
@@ -26,3 +27,5 @@ Thumbs.db
 
 # Vite
 .vite/
+.vercel
+.env*
