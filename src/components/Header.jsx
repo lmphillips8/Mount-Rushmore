@@ -10,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 import { useUser } from "../context/UserContext.jsx";
-
+import UserMenu from "../components/UserMenu.jsx";
 const NAV = [
   { to: "/", label: "Today", icon: Flame, color: "orange" },
   { to: "/community", label: "Community", icon: Users, color: "blue" },
@@ -61,27 +61,7 @@ export default function Header() {
         })}
       </nav>
 
-      <div className="header-user">
-        {user ? (
-          <>
-            <span>
-              {user.avatar && <img src={user.avatar} alt="" />}
-              {user.username}
-            </span>
-            <a
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                logout();
-              }}
-            >
-              Log out
-            </a>
-          </>
-        ) : (
-          <span>Not signed in</span>
-        )}
-      </div>
+      <UserMenu />
 
       <button
         type="button"

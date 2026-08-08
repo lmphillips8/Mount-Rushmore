@@ -11,3 +11,8 @@ p {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+.footer-social {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-evenly;
+}

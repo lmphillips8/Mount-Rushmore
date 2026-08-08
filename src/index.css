@@ -25,6 +25,28 @@
   --font-body: "Inter", sans-serif;
 }
 
+[data-theme="dark"] {
+  --cream: #141414;
+  --cream-deep: #1b1b1b;
+  --line: #353535;
+  --white: #1e1e1e;
+  --ink: #eae8e5;
+  --ink-soft: #a89e8f;
+
+  --brand: #f45d01;
+  --brand-dark: #ea580c;
+  --brand-tint: #3a2415;
+
+  --rot-1: #f45d01;
+  --rot-1-tint: #2d1508;
+  --rot-2: #2d7dd2;
+  --rot-2-tint: #00111f;
+  --rot-3: #a3d158;
+  --rot-3-tint: #26310f;
+  --rot-4: #f0b429;
+  --rot-4-tint: #3a2c07;
+}
+
 *:not(.emoji-popover, .emoji-popover *) {
   box-sizing: border-box;
 }
@@ -33,6 +55,10 @@ body {
   background: var(--cream);
   color: var(--ink);
   font-family: var(--font-body);
+}
+
+a {
+  color: var(--brand);
 }
 
 #root {
@@ -64,7 +90,6 @@ p {
   padding: 0.9rem 1.5rem;
   background: var(--cream);
   border-bottom: 1px solid var(--line);
-  border-top: 3px solid var(--ink);
   flex-wrap: wrap;
 }
 
@@ -498,14 +523,14 @@ button:not(.emoji-popover *) {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 0.75rem;
 }
 
 .display-pill {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  border-radius: 999px;
+  border-radius: 15px;
   padding: 0.8rem 0.9rem;
   font-size: 1.2rem;
   color: var(--ink);
@@ -531,6 +556,41 @@ button:not(.emoji-popover *) {
 
 .display-pill.rot-4 {
   border: 2px solid var(--rot-4-tint);
+}
+
+.history {
+  .display-pill {
+    border: none;
+  }
+}
+
+[data-theme="dark"] {
+  .display-pill.rot-1 {
+    border: 2px solid var(--rot-1);
+    background-color: var(--rot-1-tint);
+  }
+  .display-pill.rot-2 {
+    border: 2px solid var(--rot-2);
+    background-color: var(--rot-2-tint);
+  }
+  .display-pill.rot-3 {
+    border: 2px solid var(--rot-3);
+    background-color: var(--rot-3-tint);
+  }
+  .display-pill.rot-4 {
+    border: 2px solid var(--rot-4);
+    background-color: var(--rot-4-tint);
+  }
+  .icon-wrapper {
+    background-color: var(--white) !important ;
+
+    svg {
+      fill: white;
+    }
+  }
+  .answer-card {
+    background-color: var(--cream) !important;
+  }
 }
 
 .your-answers-card {
@@ -624,18 +684,22 @@ button:not(.emoji-popover *) {
 
 .answer-card.rot-1 {
   border-top-color: var(--rot-1);
+  background-color: var(--rot-1-tint);
 }
 
 .answer-card.rot-2 {
   border-top-color: var(--rot-2);
+  background-color: var(--rot-2-tint);
 }
 
 .answer-card.rot-3 {
   border-top-color: var(--rot-3);
+  background-color: var(--rot-3-tint);
 }
 
 .answer-card.rot-4 {
   border-top-color: var(--rot-4);
+  background-color: var(--rot-4-tint);
 }
 
 .answer-card-header {
@@ -1012,4 +1076,101 @@ button:not(.emoji-popover *) {
 }
 .align-center {
   text-align: center;
+}
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu-trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.4rem 0.7rem 0.4rem 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.user-menu-trigger:hover {
+  border-color: var(--brand);
+}
+
+.user-menu-trigger img {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+}
+
+.user-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 0.75rem;
+  min-width: 190px;
+  box-shadow: 0 10px 24px rgba(33, 29, 24, 0.14);
+  z-index: 50;
+}
+
+.user-menu-section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  font-weight: 700;
+  padding: 0.2rem 0.3rem 0.4rem;
+}
+
+.theme-toggle {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0 0.3rem 0.6rem;
+  margin-bottom: 0.4rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.theme-toggle-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  background: var(--cream);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.4rem 0.3rem;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+}
+
+.theme-toggle-btn-active {
+  background: var(--brand-tint);
+  border-color: var(--brand);
+  color: var(--brand);
+}
+
+.user-menu-item {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-align: left;
+}
+
+.user-menu-item:hover {
+  background: var(--cream);
+  color: var(--ink);
 }
