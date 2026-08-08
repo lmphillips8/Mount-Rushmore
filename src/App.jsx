@@ -6,15 +6,19 @@ import AnswerForm from "./components/AnswerForm.jsx";
 import SignIn from "./components/SignIn.jsx";
 import Share from "./components/Share.jsx";
 import SocialLinks from "./components/SocialLinks.jsx";
-import { formatLongDate } from "./utils/date.js";
+import { formatLongDate, todayEastern } from "./utils/date.js";
 import { rotationClass } from "./utils/colors.js";
 import { Send, ArrowRight } from "lucide-react";
 import "./styles/components/Hero.scss";
+import NoPrompt from "./components/NoPrompt.jsx";
+import Loading from "./components/Loading.jsx";
+
 export default function App() {
   const { loginAsGuest } = useUser();
   const {
     user,
     prompt,
+    emptyPrompt,
     loading,
     submitting,
     error,
@@ -24,15 +28,18 @@ export default function App() {
   } = useToday();
 
   if (loading) {
-    return <div className="page">Loading...</div>;
+    if (error == "No prompt set for today! Go bother Brian") {
+      return <NoPrompt color={"orange"} />;
+    }
+    return <Loading className="page">Loading...</Loading>;
   }
 
   return (
     <div className="page">
       <Hero
         color="orange"
-        eyebrow={formatLongDate(prompt.date)}
-        emoji={prompt.emoji}
+        eyebrow={formatLongDate(prompt?.date)}
+        emoji={prompt?.emoji}
         image={true}
       />
 

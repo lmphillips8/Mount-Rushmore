@@ -11,7 +11,12 @@ export function useToday() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    api.todayPrompt().then(setPrompt);
+    api
+      .todayPrompt()
+      .then(setPrompt)
+      .catch((e) => {
+        setError(e.message);
+      });
   }, []);
 
   useEffect(() => {
@@ -35,8 +40,7 @@ export function useToday() {
     }
   };
 
-  const loading =
-    user === undefined || !prompt || (user && others === undefined);
+  const loading = user === undefined || (user && others === undefined);
   const answersData = others ?? { unlocked: false, answers: [] };
   const alreadySubmitted = answersData.unlocked;
   const mySubmittedAnswers = user

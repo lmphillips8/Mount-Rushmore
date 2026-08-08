@@ -12,7 +12,7 @@ function initials(name) {
     .toUpperCase();
 }
 
-export default function AnswersList({ answers, reactable }) {
+export default function AnswersList({ answers }) {
   const [items, setItems] = useState(answers);
 
   // Keep in sync if the parent re-fetches, but reaction updates below are
@@ -65,7 +65,6 @@ export default function AnswersList({ answers, reactable }) {
             </ul>
 
             <ReactionBar
-              reactable={reactable}
               answerId={entry._id}
               reactions={entry.reactions || []}
               onChange={(reactions) => updateReactions(entry._id, reactions)}

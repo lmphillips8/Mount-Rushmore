@@ -25,7 +25,7 @@ export default function SignIn({ onGuestLogin }) {
       <p>Sign in to submit your answers and see everyone else's.</p>
       <a href="/api/auth/login">
         <button className="twitch-btn" style={{ marginRight: "0.6rem" }}>
-          Log in with Twitch - WIP
+          Log in with Twitch
         </button>
       </a>
 

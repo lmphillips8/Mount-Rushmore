@@ -7,11 +7,14 @@ import ShareTemplate from "../components/Share.jsx";
 import { rotationClass } from "../utils/colors.js";
 import { formatLongDate } from "../utils/date.js";
 import "../styles/pages/Community.scss";
+import NoPrompt from "../components/NoPrompt.jsx";
+import Loading from "../components/Loading.jsx";
 
 export default function Community() {
   const {
     user,
     prompt,
+    error,
     loading,
     alreadySubmitted,
     answersData,
@@ -19,7 +22,10 @@ export default function Community() {
   } = useToday();
 
   if (loading) {
-    return <div className="page">Loading...</div>;
+    if (error == "No prompt set for today! Go bother Brian") {
+      return <NoPrompt color={"blue"} />;
+    }
+    return <Loading className="page"></Loading>;
   }
 
   return (
@@ -97,7 +103,6 @@ export default function Community() {
           </div>
 
           <AnswersList
-            reactable={true}
             answers={answersData.answers.filter(
               (a) => a.userId !== user.userId,
             )}

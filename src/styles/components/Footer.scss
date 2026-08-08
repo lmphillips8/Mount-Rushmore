@@ -1,0 +1,13 @@
+.site-footer {
+  font-size: 12px;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+  border-top: 1px solid var(--line);
+  top: calc(100vh - 70px);
+  height: 70px;
+}
+p {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}

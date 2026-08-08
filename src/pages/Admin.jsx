@@ -4,15 +4,17 @@ import EmojiPicker from "emoji-picker-react";
 import { api } from "../api.js";
 import { todayEastern } from "../utils/date.js";
 import PasswordModal from "../components/PasswordModal.jsx";
+import { useToday } from "../context/useToday.js";
 import "../styles/pages/Admin.scss";
 
 function nextOpenDate(upcoming) {
-  // Suggest the day after the latest already-scheduled prompt, or today
-  // (in Eastern time, matching how the backend decides what "today" is —
-  // not the browser's local timezone).
+  // Suggest the day after the latest already-scheduled prompt — or, if
+  // nothing's scheduled yet, the day after today. Today itself is always
+  // taken (the `today` action auto-creates a fallback prompt if none
+  // exists), so defaulting straight to today here would always collide.
   const dates = upcoming.map((p) => p.date).sort();
-  if (!dates.length) return todayEastern();
-  const base = new Date(dates[dates.length - 1] + "T00:00:00Z");
+  const latest = dates.length ? dates[dates.length - 1] : todayEastern();
+  const base = new Date(latest + "T00:00:00Z");
   base.setUTCDate(base.getUTCDate() + 1);
   return base.toISOString().slice(0, 10);
 }
@@ -33,7 +35,7 @@ function SuggestionRow({
       <div className="queue-row-text">
         <span className="queue-emoji">{suggestion.emoji || "🐻"}</span>
         <div>
-          {suggestion.text}
+          <p>{suggestion.text}</p>
           <div className="queue-submitted-by">
             — {suggestion.submittedBy || "Anonymous"}
           </div>
@@ -130,7 +132,7 @@ function CreatePromptForm({ takenDates, defaultDate, onCreate }) {
 
   return (
     <form className="card" onSubmit={submit}>
-      <div className="row">
+      <div className="row enter-prompt-row">
         <div className="emoji-field" ref={emojiWrapperRef}>
           <button
             type="button"
@@ -151,13 +153,16 @@ function CreatePromptForm({ takenDates, defaultDate, onCreate }) {
             </div>
           )}
         </div>
-        <input
-          type="text"
-          value={text}
-          onChange={(e) => setText(e.target.value)}
-          placeholder="What would your perfect...?"
-          maxLength={120}
-        />
+        <div className="enter-prompt">
+          <p className="brand">Mount Rushmore of</p>
+          <input
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="overrated fast food restaurants"
+            maxLength={120}
+          />
+        </div>
       </div>
       <div className="queue-row-actions" style={{ marginTop: "0.75rem" }}>
         <input
@@ -187,6 +192,8 @@ export default function Admin() {
   const [showModal, setShowModal] = useState(false);
   const [queue, setQueue] = useState(null);
   const [error, setError] = useState("");
+
+  const { prompt } = useToday();
 
   const loadQueue = useCallback(async () => {
     const data = await api.adminQueue();
@@ -270,7 +277,10 @@ export default function Admin() {
   const defaultDate = nextOpenDate(upcoming);
   // today's prompt is deliberately excluded from `upcoming` (it's live, not
   // upcoming) but it's still a taken date as far as scheduling goes.
-  const takenDates = new Set([todayEastern(), ...upcoming.map((p) => p.date)]);
+  let takenDates = new Set([...upcoming.map((p) => p.date)]);
+  if (prompt) {
+    takenDates.add(todayEastern());
+  }
 
   return (
     <div className="page">
@@ -293,7 +303,14 @@ export default function Admin() {
       <h1>Prompt queue</h1>
 
       {error && <p className="modal-error">{error}</p>}
-
+      <div className="eyebrow" style={{ marginTop: "2rem" }}>
+        Add a prompt directly
+      </div>
+      <CreatePromptForm
+        takenDates={takenDates}
+        defaultDate={defaultDate}
+        onCreate={handleCreate}
+      />
       <div className="eyebrow" style={{ marginTop: "1.5rem" }}>
         Suggestions ({suggestions.length})
       </div>
@@ -338,15 +355,6 @@ export default function Admin() {
           </div>
         </div>
       ))}
-
-      <div className="eyebrow" style={{ marginTop: "2rem" }}>
-        Add a prompt directly
-      </div>
-      <CreatePromptForm
-        takenDates={takenDates}
-        defaultDate={defaultDate}
-        onCreate={handleCreate}
-      />
     </div>
   );
 }

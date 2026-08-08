@@ -11,12 +11,7 @@ function groupReactions(reactions) {
   return groups;
 }
 
-export default function ReactionBar({
-  answerId,
-  reactions,
-  onChange,
-  reactable,
-}) {
+export default function ReactionBar({ answerId, reactions, onChange }) {
   const { user } = useUser();
   const [showPicker, setShowPicker] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -65,17 +60,15 @@ export default function ReactionBar({
         );
       })}
 
-      {reactable && (
-        <button
-          type="button"
-          className="reaction-add"
-          onClick={() => setShowPicker((s) => !s)}
-          disabled={!user}
-          title={user ? "Add reaction" : "Log in to react"}
-        >
-          +
-        </button>
-      )}
+      <button
+        type="button"
+        className="reaction-add"
+        onClick={() => setShowPicker((s) => !s)}
+        disabled={!user}
+        title={user ? "Add reaction" : "Log in to react"}
+      >
+        +
+      </button>
 
       {showPicker && (
         <div className="emoji-popover">

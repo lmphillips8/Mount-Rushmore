@@ -1,7 +1,11 @@
 import { getSession } from "../lib/session.js";
-import { clearSessionCookie } from "../lib/session.js";
-import { createAnonSessionCookie } from "../lib/session.js";
-import { createAdminSessionCookie } from "../lib/session.js";
+import {
+  createAdminSessionCookie,
+  createTwitchSessionCookie,
+  createAnonSessionCookie,
+  clearSessionCookie,
+} from "../lib/session.js";
+
 import { isAdmin } from "../lib/session.js";
 
 export default async function handler(req, res) {

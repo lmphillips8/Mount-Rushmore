@@ -8,6 +8,7 @@ import { formatLongDate } from "../utils/date.js";
 import "../styles/pages/History.scss";
 import AnswerForm from "../components/AnswerForm.jsx";
 import { useToday } from "../context/useToday.js";
+import Loading from "../components/Loading.jsx";
 
 export default function History() {
   const [history, setHistory] = useState(null);
@@ -40,7 +41,7 @@ export default function History() {
       />
 
       {error && <p style={{ color: "#d9362e" }}>{error}</p>}
-      {!history && !error && <p>Loading...</p>}
+      {!history && !error && <Loading />}
       {history?.length === 0 && (
         <p className="empty-state">No past prompts yet.</p>
       )}
@@ -72,7 +73,7 @@ export default function History() {
 
             {isOpen && (
               <div className="history-entry-body">
-                <AnswersList answers={day.answers} reactable={false} />
+                <AnswersList answers={day.answers} />
                 <button
                   className="add-history-btn"
                   onClick={() => addHistoricalModal(day.id)}
