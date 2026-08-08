@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown, Sun, Moon, LogOut } from "lucide-react";
 import { useUser } from "../context/UserContext.jsx";
-import { useTheme } from "../context/useTheme.js";
+import { useTheme } from "../context/ThemeContext.jsx";
 
 export default function UserMenu() {
   const { user, logout } = useUser();
-  const [theme, setTheme] = useTheme();
+  const { theme, setTheme } = useTheme();
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef(null);
 

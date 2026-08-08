@@ -56,7 +56,6 @@ function handleLogout(req, res) {
   res.status(200).json({ ok: true });
 }
 async function handleCallback(req, res) {
-  console.log(req);
   const { code } = req.query;
   if (!code) {
     res.status(400).send("Missing authorization code");
@@ -94,7 +93,7 @@ async function handleCallback(req, res) {
 
     // 3. Issue our own session cookie (never expose the Twitch token to the frontend)
     res.setHeader("Set-Cookie", createTwitchSessionCookie(twitchUser));
-    res.writeHead(302, { Location: process.env.APP_URL });
+    res.writeHead(302, { Location: process.env.APP_URL || "/" });
     res.end();
   } catch (err) {
     console.error("Twitch auth error:", err);

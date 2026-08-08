@@ -3,33 +3,78 @@ import { Calendar, ChevronDown, ChevronRight } from "lucide-react";
 import { api } from "../api.js";
 import Hero from "../components/Hero.jsx";
 import AnswersList from "../components/AnswersList.jsx";
+import AnswerForm from "../components/AnswerForm.jsx";
+import Loading from "../components/Loading.jsx";
+import { useUser } from "../context/UserContext.jsx";
 import { rotationClass } from "../utils/colors.js";
 import { formatLongDate } from "../utils/date.js";
 import "../styles/pages/History.scss";
-import AnswerForm from "../components/AnswerForm.jsx";
-import { useToday } from "../context/useToday.js";
-import Loading from "../components/Loading.jsx";
 
 export default function History() {
+  const { user } = useUser();
   const [history, setHistory] = useState(null);
   const [error, setError] = useState(null);
   const [openId, setOpenId] = useState(null);
+
+  // Modal state for backfilling a missed day. Kept self-contained here
+  // (rather than a shared hook) so it's explicitly tied to whichever day
+  // was actually clicked, not today's prompt.
+  const [selectedDay, setSelectedDay] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [modalAnswers, setModalAnswers] = useState(undefined); // undefined = loading
+  const [modalSubmitting, setModalSubmitting] = useState(false);
+  const [modalError, setModalError] = useState(null);
 
-  const { submitting, submitAnswers } = useToday();
-
-  useEffect(() => {
-    api
+  const loadHistory = () => {
+    return api
       .history()
       .then((r) => {
         setHistory(r.history);
-        if (r.history?.length) setOpenId(r.history[0].id);
+        return r.history;
       })
       .catch((err) => setError(err.message));
+  };
+
+  useEffect(() => {
+    loadHistory().then((h) => {
+      if (h?.length) setOpenId(h[0].id);
+    });
   }, []);
 
-  const addHistoricalModal = () => {
+  const openHistoricalModal = async (day) => {
+    setSelectedDay(day);
     setShowModal(true);
+    setModalAnswers(undefined);
+    setModalError(null);
+
+    if (!user) return; // nothing to fetch yet — modal shows a sign-in prompt
+
+    try {
+      const result = await api.todayAnswers(day.id);
+      setModalAnswers(result);
+    } catch (err) {
+      setModalError(err.message);
+    }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+    setSelectedDay(null);
+  };
+
+  const handleModalSubmit = async (answers) => {
+    setModalSubmitting(true);
+    setModalError(null);
+    try {
+      await api.submitAnswers(selectedDay.id, answers);
+      const fresh = await api.todayAnswers(selectedDay.id);
+      setModalAnswers(fresh);
+      await loadHistory(); // refresh the accordion so the new answer shows up
+    } catch (err) {
+      setModalError(err.message);
+    } finally {
+      setModalSubmitting(false);
+    }
   };
 
   return (
@@ -75,8 +120,9 @@ export default function History() {
               <div className="history-entry-body">
                 <AnswersList answers={day.answers} />
                 <button
+                  type="button"
                   className="add-history-btn"
-                  onClick={() => addHistoricalModal(day.id)}
+                  onClick={() => openHistoricalModal(day)}
                 >
                   Add an answer +
                 </button>
@@ -85,16 +131,36 @@ export default function History() {
           </div>
         );
       })}
-      {showModal && (
-        <div
-          className="modal-overlay"
-          onClick={() => {
-            setShowModal(false);
-          }}
-        >
+
+      {showModal && selectedDay && (
+        <div className="modal-overlay" onClick={closeModal}>
           <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <h2 className="modal-title">{prompt.text}</h2>
-            (this doesnt work yet hehe)
+            {/* <h2 className="modal-title">
+              Mount Rushmore of {selectedDay.text}
+            </h2> */}
+
+            {!user && (
+              <p>
+                Log in on the Today tab first, then come back to answer this
+                one.
+              </p>
+            )}
+
+            {user && modalAnswers === undefined && !modalError && <Loading />}
+
+            {modalError && <p className="modal-error">{modalError}</p>}
+
+            {user && modalAnswers && !modalAnswers.unlocked && (
+              <AnswerForm
+                onSubmit={handleModalSubmit}
+                submitting={modalSubmitting}
+                prompt={selectedDay}
+              />
+            )}
+
+            {user && modalAnswers && modalAnswers.unlocked && (
+              <p>You've already answered this one — nice work catching up!</p>
+            )}
           </div>
         </div>
       )}

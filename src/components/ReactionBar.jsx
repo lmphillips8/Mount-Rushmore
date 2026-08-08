@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import EmojiPicker from "emoji-picker-react";
+import EmojiPicker, { Theme } from "emoji-picker-react";
 import { useUser } from "../context/UserContext.jsx";
+import { useTheme } from "../context/ThemeContext.jsx";
 import { api } from "../api.js";
 
 function groupReactions(reactions) {
@@ -16,6 +17,8 @@ export default function ReactionBar({ answerId, reactions, onChange }) {
   const [showPicker, setShowPicker] = useState(false);
   const [busy, setBusy] = useState(false);
   const wrapperRef = useRef(null);
+
+  const { theme } = useTheme();
 
   useEffect(() => {
     if (!showPicker) return;
@@ -72,7 +75,12 @@ export default function ReactionBar({ answerId, reactions, onChange }) {
 
       {showPicker && (
         <div className="emoji-popover">
-          <EmojiPicker lazyLoadEmojis onEmojiClick={(e) => toggle(e.emoji)} />
+          <EmojiPicker
+            lazyLoadEmojis
+            onEmojiClick={(e) => toggle(e.emoji)}
+            previewConfig={{ defaultCaption: "Mount Rushmore Reaction" }}
+            theme={theme === "light" ? Theme.LIGHT : Theme.DARK}
+          />
         </div>
       )}
     </div>

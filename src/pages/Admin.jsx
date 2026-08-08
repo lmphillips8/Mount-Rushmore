@@ -6,6 +6,7 @@ import { todayEastern } from "../utils/date.js";
 import PasswordModal from "../components/PasswordModal.jsx";
 import { useToday } from "../context/useToday.js";
 import "../styles/pages/Admin.scss";
+import Loading from "../components/Loading.jsx";
 
 function nextOpenDate(upcoming) {
   // Suggest the day after the latest already-scheduled prompt — or, if
@@ -242,7 +243,7 @@ export default function Admin() {
   };
 
   if (checking) {
-    return <div className="page">Loading...</div>;
+    return <Loading className="page" />;
   }
 
   if (!isAdmin) {
@@ -284,22 +285,6 @@ export default function Admin() {
 
   return (
     <div className="page">
-      <div className="user-bar">
-        <span className="eyebrow">Admin</span>
-        <nav className="nav-links">
-          <Link to="/">Today</Link>
-          <a
-            href="#"
-            onClick={async (e) => {
-              e.preventDefault();
-              await api.adminLogout();
-              setIsAdmin(false);
-            }}
-          >
-            Log out
-          </a>
-        </nav>
-      </div>
       <h1>Prompt queue</h1>
 
       {error && <p className="modal-error">{error}</p>}

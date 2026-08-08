@@ -192,6 +192,7 @@ p {
   background: none;
   border: none;
   cursor: pointer;
+  color: var(--ink);
 }
 
 .nav-backdrop {
@@ -211,7 +212,7 @@ p {
   right: -280px;
   width: 280px;
   height: 100vh;
-  background: #fff;
+  background: var(--cream);
   display: flex;
   flex-direction: column;
   gap: 8px;
@@ -267,26 +268,24 @@ p {
   animation: jump 1.36s infinite ease-in-out;
 }
 
-/* Assign unique colors to each dot */
 .dot-wave .dot:nth-child(1) {
-  background-color: var(--rot-1); /* Coral Red */
+  background-color: var(--rot-1);
   animation-delay: -0.48s;
 }
 
 .dot-wave .dot:nth-child(2) {
-  background-color: var(--rot-2); /* Lime Green */
+  background-color: var(--rot-2);
   animation-delay: -0.32s;
 }
 
 .dot-wave .dot:nth-child(3) {
-  background-color: var(--rot-3); /* Clear Blue */
+  background-color: var(--rot-3);
   animation-delay: -0.16s;
 }
 
 .dot-wave .dot:nth-child(4) {
-  background-color: var(--rot-4); /* Clear Blue */
+  background-color: var(--rot-4);
 }
-
 @keyframes jump {
   0%,
   80%,
@@ -315,7 +314,7 @@ input[type="text"]:not(.emoji-popover *) {
   color: var(--ink);
   border-radius: 8px;
   padding: 0.65rem 0.8rem;
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-family: var(--font-body);
 }
 
@@ -331,7 +330,7 @@ button:not(.emoji-popover *) {
   border-radius: 999px;
   padding: 0.7rem 1.2rem;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.95rem;
 }
 
 .btn-primary {
@@ -786,9 +785,9 @@ button:not(.emoji-popover *) {
   background: var(--brand-tint);
 }
 
-.reaction-add {
+.reaction-bar .reaction-add {
   background: transparent;
-  border: 1px dashed var(--ink-soft);
+  border: 1px dashed var(--ink-soft) !important;
   border-radius: 999px;
   width: 1.9rem;
   height: 1.9rem;
@@ -833,7 +832,6 @@ button:not(.emoji-popover *) {
   position: relative;
   margin: 1rem 0;
 }
-
 .emoji-trigger {
   background: var(--white);
   border: 1px solid var(--line);
@@ -858,6 +856,28 @@ button:not(.emoji-popover *) {
   left: 0;
   z-index: 20;
   isolation: isolate;
+}
+
+.emoji-popover input {
+  font-size: 16px !important;
+}
+
+@media (max-width: 480px) {
+  .emoji-popover {
+    position: fixed;
+    top: auto;
+    left: 50%;
+    right: auto;
+    bottom: 1rem;
+    transform: translateX(-50%);
+    width: calc(100vw - 2rem);
+    max-width: 350px;
+    z-index: 300;
+  }
+
+  .emoji-popover > * {
+    max-width: 100% !important;
+  }
 }
 
 .modal-error {
@@ -885,7 +905,7 @@ button:not(.emoji-popover *) {
   border-radius: 16px;
   padding: 1.5rem;
   width: 100%;
-  max-width: 340px;
+  max-width: 860px;
   box-shadow: 0 12px 30px rgba(33, 29, 24, 0.2);
 }
 

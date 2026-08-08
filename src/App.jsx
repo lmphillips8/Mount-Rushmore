@@ -12,6 +12,7 @@ import { Send, ArrowRight } from "lucide-react";
 import "./styles/components/Hero.scss";
 import NoPrompt from "./components/NoPrompt.jsx";
 import Loading from "./components/Loading.jsx";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App() {
   const { loginAsGuest } = useUser();
@@ -38,7 +39,7 @@ export default function App() {
     <div className="page">
       <Hero
         color="orange"
-        eyebrow={formatLongDate(prompt?.date)}
+        eyebrow={prompt?.date ? formatLongDate(prompt.date) : ""}
         emoji={prompt?.emoji}
         image={true}
       />
@@ -101,6 +102,7 @@ export default function App() {
       )}
 
       <SocialLinks />
+      <Analytics />
     </div>
   );
 }

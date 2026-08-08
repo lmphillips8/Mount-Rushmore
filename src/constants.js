@@ -1,4 +1,4 @@
-import { SiTwitch, SiInstagram, SiDiscord, SiX } from "react-icons/si";
+import { SiTwitch, SiYoutube, SiDiscord, SiX } from "react-icons/si";
 
 // Swap these placeholder URLs for your actual account links.
 export const SOCIAL_LINKS = [

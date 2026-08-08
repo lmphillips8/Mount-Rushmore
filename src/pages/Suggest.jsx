@@ -1,14 +1,15 @@
 import { useState, useEffect, useRef } from "react";
-import EmojiPicker from "emoji-picker-react";
+import EmojiPicker, { Theme } from "emoji-picker-react";
 import { api } from "../api.js";
 import { useUser } from "../context/UserContext.jsx";
 import Hero from "../components/Hero.jsx";
 import { Link } from "react-router-dom";
-
+import { useTheme } from "../context/ThemeContext.jsx";
 import { formatLongDate } from "../utils/date.js";
 import "../styles/pages/Suggest.scss";
 export default function Suggest() {
   const { user } = useUser();
+  const { theme } = useTheme();
   const [newPrompt, setNewPrompt] = useState({
     text: "",
     emoji: null,
@@ -19,8 +20,6 @@ export default function Suggest() {
   const [error, setError] = useState("");
   const emojiWrapperRef = useRef(null);
 
-  // Pre-fill from their session name if they're logged in, but leave it
-  // editable — suggesting doesn't require being logged in at all.
   useEffect(() => {
     if (user?.username) {
       setNewPrompt((prev) =>
@@ -105,7 +104,6 @@ export default function Suggest() {
           </Link>
         </div>
       )}
-
       {user && (
         <form className="suggestion-box " onSubmit={submitPrompt}>
           <h2>Mount Rushmore of:</h2>
@@ -120,7 +118,12 @@ export default function Suggest() {
               </button>
               {showEmojiPicker && (
                 <div className="emoji-popover">
-                  <EmojiPicker lazyLoadEmojis onEmojiClick={selectEmoji} />
+                  <EmojiPicker
+                    lazyLoadEmojis
+                    onEmojiClick={selectEmoji}
+                    previewConfig={{ defaultCaption: "Mount Rushmore Icon" }}
+                    theme={theme === "light" ? Theme.LIGHT : Theme.DARK}
+                  />
                 </div>
               )}
             </div>

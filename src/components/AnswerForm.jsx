@@ -27,7 +27,7 @@ export default function AnswerForm({ onSubmit, submitting, prompt }) {
       }}
     >
       <h1 className="prompt-title">
-        {prompt.emoji ?? ""} Mount Rushmore of {prompt.text}
+        {prompt?.emoji ?? ""} Mount Rushmore of {prompt?.text}
       </h1>
       {values.map((val, i) => {
         const color = rotationClass(i);

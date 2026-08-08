@@ -3,8 +3,6 @@ import { getDb } from "../lib/db.js";
 import { getSession } from "../lib/session.js";
 import { todayEastern } from "../lib/date.js";
 
-// Handles /api/answers/submit, /today, /history — consolidated into one
-// function (see api/auth/[action].js for why).
 export default async function handler(req, res) {
   const { action } = req.query;
 
@@ -135,7 +133,6 @@ export default async function handler(req, res) {
       { projection: { _id: 1 } },
     );
 
-    // Toggle: pull if this user already reacted with this emoji, otherwise push.
     if (existing) {
       await db
         .collection("answers")

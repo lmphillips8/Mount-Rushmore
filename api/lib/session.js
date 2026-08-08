@@ -27,8 +27,6 @@ export function createTwitchSessionCookie(twitchUser) {
   });
 }
 
-// Anonymous/guest session — identified only by a random id in the signed cookie.
-// Nothing links this to a real identity beyond the display name they typed.
 export function createAnonSessionCookie(displayName) {
   return signAndSerialize({
     authType: "anon",
@@ -47,7 +45,6 @@ export function clearSessionCookie() {
   });
 }
 
-// Returns the decoded session payload, or null if missing/invalid.
 export function getSession(req) {
   const cookies = cookie.parse(req.headers.cookie || "");
   const token = cookies[COOKIE_NAME];

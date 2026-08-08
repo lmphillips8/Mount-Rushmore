@@ -37,8 +37,6 @@ async function handleToday(req, res) {
 
   let prompt = await db.collection("prompts").findOne({ date });
 
-  // Fallback so the app never breaks if nobody's queued up a prompt yet.
-  // Swap this out for an admin tool or a seeded prompts list.
   if (!prompt) {
     res.status(400).json({ error: "No prompt set for today! Go bother Brian" });
     return;
