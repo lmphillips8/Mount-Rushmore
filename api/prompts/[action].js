@@ -33,7 +33,7 @@ function todayString() {
 
 async function handleToday(req, res) {
   const db = await getDb();
-  const date = todayString();
+  const date = todayEastern();
 
   let prompt = await db.collection("prompts").findOne({ date });
 
