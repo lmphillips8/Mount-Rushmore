@@ -96,7 +96,7 @@ async function handleQueue(req, res) {
 
   const upcoming = await db
     .collection("prompts")
-    .find({ date: { $gt: today } })
+    .find({ date: { $gte: today } })
     .sort({ date: 1 })
     .toArray();
 

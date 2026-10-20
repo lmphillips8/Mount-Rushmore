@@ -41,7 +41,11 @@ export default function AnswersList({ answers }) {
           <div className={`answer-card ${color}`} key={entry._id}>
             <div className="answer-card-header">
               <div className={`answer-card-avatar ${color}`}>
-                {initials(entry.username)}
+                {entry.avatar ? (
+                  <img src={entry.avatar} />
+                ) : (
+                  initials(entry.username)
+                )}
               </div>
               <div>
                 <div className="answer-card-name">{entry.username}</div>

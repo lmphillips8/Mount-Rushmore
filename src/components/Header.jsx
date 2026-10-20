@@ -8,6 +8,7 @@ import {
   Sparkles,
   Menu,
   X,
+  Zap,
 } from "lucide-react";
 import { useUser } from "../context/UserContext.jsx";
 import UserMenu from "../components/UserMenu.jsx";
@@ -16,6 +17,7 @@ const NAV = [
   { to: "/community", label: "Community", icon: Users, color: "blue" },
   { to: "/suggest", label: "Suggest", icon: MessageSquare, color: "green" },
   { to: "/history", label: "History", icon: HistoryIcon, color: "gold" },
+  { to: "/streaks", label: "Streaks", icon: Zap, color: "orange" },
 ];
 
 export default function Header() {

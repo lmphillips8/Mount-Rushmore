@@ -24,6 +24,7 @@ export function createTwitchSessionCookie(twitchUser) {
     authType: "twitch",
     userId: `twitch:${twitchUser.id}`,
     username: twitchUser.display_name,
+    avatar: twitchUser.profile_image_url,
   });
 }
 

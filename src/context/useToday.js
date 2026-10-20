@@ -43,6 +43,8 @@ export function useToday() {
   const loading = user === undefined || (user && others === undefined);
   const answersData = others ?? { unlocked: false, answers: [] };
   const alreadySubmitted = answersData.unlocked;
+  const alreadyPlayed = streaksData.played;
+
   const mySubmittedAnswers = user
     ? answersData.answers.find((a) => a.userId === user.userId)
     : null;
@@ -54,6 +56,8 @@ export function useToday() {
     submitting,
     error,
     alreadySubmitted,
+    alreadyPlayed,
+    streak,
     answersData,
     mySubmittedAnswers,
     myAnswers,

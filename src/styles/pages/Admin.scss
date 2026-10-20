@@ -65,3 +65,20 @@
     }
   }
 }
+
+.today-card {
+  background-color: var(--rot-1-tint);
+  .today-row {
+    flex-direction: column;
+    align-items: start;
+    .eyebrow {
+      font-size: 0.8em;
+    }
+    .today-text {
+      display: inline;
+      p {
+        display: inline;
+      }
+    }
+  }
+}

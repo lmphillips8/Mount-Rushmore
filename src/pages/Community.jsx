@@ -102,11 +102,7 @@ export default function Community() {
             </span>
           </div>
 
-          <AnswersList
-            answers={answersData.answers.filter(
-              (a) => a.userId !== user.userId,
-            )}
-          />
+          <AnswersList answers={answersData.answers} />
         </>
       )}
     </div>
