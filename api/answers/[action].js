@@ -33,6 +33,7 @@ export default async function handler(req, res) {
         promptId: new ObjectId(promptId),
         userId: session.userId,
         username: session.username,
+        avatar: session.avatar,
         answers: answers.map((a) => a.trim()),
         submittedAt: new Date(),
       });
@@ -66,6 +67,7 @@ export default async function handler(req, res) {
       .project({
         username: 1,
         userId: 1,
+        avatar: 1,
         answers: 1,
         submittedAt: 1,
         reactions: 1,
@@ -90,7 +92,7 @@ export default async function handler(req, res) {
         const answers = await db
           .collection("answers")
           .find({ promptId: prompt._id })
-          .project({ username: 1, answers: 1, reactions: 1 })
+          .project({ username: 1, answers: 1, reactions: 1, avatar: 1 })
           .toArray();
         return {
           id: prompt._id,
@@ -148,6 +150,7 @@ export default async function handler(req, res) {
             reactions: {
               userId: session.userId,
               username: session.username,
+              avatar: session.avatar,
               emoji,
             },
           },

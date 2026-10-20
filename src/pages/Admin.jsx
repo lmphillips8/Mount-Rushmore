@@ -63,10 +63,6 @@ function SuggestionRow({
           className="btn-secondary btn-delete"
           disabled={busy}
           onClick={async () => {
-            if (
-              !window.confirm("Delete this suggestion? This can't be undone.")
-            )
-              return;
             setBusy(true);
             await onReject(suggestion._id);
             setBusy(false);
@@ -225,14 +221,8 @@ export default function Admin() {
     }
   };
 
-  const handleReject = async (id) => {
-    await api.rejectSuggestion(id);
-    await loadQueue();
-  };
-
   const handleDelete = async (id) => {
-    if (!window.confirm("Delete this scheduled prompt? This can't be undone."))
-      return;
+    if (!window.confirm("Delete this prompt? This can't be undone.")) return;
     await api.deletePrompt(id);
     await loadQueue();
   };
@@ -309,7 +299,7 @@ export default function Admin() {
           defaultDate={defaultDate}
           takenDates={takenDates}
           onSchedule={handleSchedule}
-          onReject={handleReject}
+          onReject={handleDelete}
         />
       ))}
 
@@ -322,10 +312,20 @@ export default function Admin() {
         </p>
       )}
       {upcoming.map((p) => (
-        <div className="queue-row card" key={p._id}>
-          <div className="queue-row-text">
-            <span className="queue-emoji">{p.emoji || "🐻"}</span>
-            {p.text}
+        <div
+          className={`queue-row card ${p.date === todayEastern() ? "today-card" : ""}`}
+          key={p._id}
+        >
+          <div
+            className={`queue-row-text ${p.date === todayEastern() ? "today-row" : ""} `}
+          >
+            {p.date === todayEastern() && (
+              <p className="eyebrow">Today's Mount Rushmore!</p>
+            )}
+            <div className="today-text">
+              <span className="queue-emoji">{p.emoji || "🐻"}</span>
+              <p>{p.text}</p>
+            </div>
           </div>
           <div className="queue-row-actions">
             <div className="queue-date-badge">{p.date}</div>

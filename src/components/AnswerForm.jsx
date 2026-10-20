@@ -26,9 +26,14 @@ export default function AnswerForm({ onSubmit, submitting, prompt }) {
         if (allFilled) onSubmit(values);
       }}
     >
-      <h1 className="prompt-title">
+      <h1
+        className={`prompt-title ${prompt.submittedBy !== "Admin" ? "submission" : ""}`}
+      >
         {prompt?.emoji ?? ""} Mount Rushmore of {prompt?.text}
       </h1>
+      {prompt?.submittedBy !== "Admin" && (
+        <p className="submitted-by">Submitted by {prompt.submittedBy}</p>
+      )}
       {values.map((val, i) => {
         const color = rotationClass(i);
         const active = focusedIndex === i || val.trim().length > 0;

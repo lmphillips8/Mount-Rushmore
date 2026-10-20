@@ -11,6 +11,7 @@ import Suggest from "./pages/Suggest.jsx";
 import Admin from "./pages/Admin.jsx";
 import Layout from "./components/Layout.jsx";
 import Community from "./pages/Community.jsx";
+import Community from "./pages/Streaks.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
               <Route path="/Community" element={<Community />} />
               <Route path="/suggest" element={<Suggest />} />
               <Route path="/History" element={<History />} />
+              <Route path="/streaks" element={<Streaks />} />
               <Route path="/admin" element={<Admin />} />
             </Route>
           </Routes>

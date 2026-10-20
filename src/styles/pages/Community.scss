@@ -1,6 +1,21 @@
 .community {
   .your-answers-card {
     border-color: var(--rot-2);
+    .display-pill.rot-1 {
+      border: 2px solid var(--rot-1-tint);
+    }
+
+    .display-pill.rot-2 {
+      border: 2px solid var(--rot-2-tint);
+    }
+
+    .display-pill.rot-3 {
+      border: 2px solid var(--rot-3-tint);
+    }
+
+    .display-pill.rot-4 {
+      border: 2px solid var(--rot-4-tint);
+    }
   }
   .your-answers-header {
     background: var(--rot-2);
